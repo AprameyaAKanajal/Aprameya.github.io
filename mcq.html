@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science MCQs – Class 9 & 10</title>
+
+    <style>
+        body {
+            background: #f4f7ff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #2a4fff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+        .mcq-card {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #d6ddff;
+        }
+        h2 {
+            color: #2a4fff;
+        }
+        button {
+            background: #2a4fff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #1736d9;
+        }
+        #scoreBox {
+            margin-top: 20px;
+            background: #dfe6ff;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            font-size: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>Science MCQs – Class 9 & 10</header>
+
+<div class="container">
+
+    <h2>Choose Class</h2>
+    <button onclick="showClass(9)">Class 9 MCQs</button>
+    <button onclick="showClass(10)">Class 10 MCQs</button>
+
+    <div id="quizArea"></div>
+
+    <div id="scoreBox"></div>
+
+</div>
+
+<script>
+    const quizData = {
+        9: [
+            {
+                q: "1. Which of the following is NOT a state of matter?",
+                a: ["Solid", "Liquid", "Gas", "Radiation"],
+                correct: 3
+            },
+            {
+                q: "2. The smallest unit of life is:",
+                a: ["Tissue", "Cell", "Organ", "Molecule"],
+                correct: 1
+            },
+            {
+                q: "3. Which method is used to separate salt from seawater?",
+                a: ["Filtration", "Evaporation", "Sedimentation", "Sublimation"],
+                correct: 1
+            }
+        ],
+
+        10: [
+            {
+                q: "1. Which gas is released during a reaction between acid and metal?",
+                a: ["Oxygen", "Nitrogen", "Hydrogen", "Carbon dioxide"],
+                correct: 2
+            },
+            {
+                q: "2. pH less than 7 indicates:",
+                a: ["Base", "Neutral", "Acid", "Salt"],
+                correct: 2
+            },
+            {
+                q: "3. Which part of the plant carries out photosynthesis?",
+                a: ["Root", "Stem", "Leaf", "Flower"],
+                correct: 2
+            }
+        ]
+    };
+
+    function showClass(cls) {
+        const area = document.getElementById("quizArea");
+        const scoreBox = document.getElementById("scoreBox");
+        scoreBox.style.display = "none";
+        area.innerHTML = ""; 
+
+        let mcqs = quizData[cls];
+        let html = `<h2>Class ${cls} MCQs</h2>`;
+
+        mcqs.forEach((item, index) => {
+            html += `
+                <div class="mcq-card">
+                    <p><b>${item.q}</b></p>
+                    ${item.a.map((opt, i) => 
+                        `<label>
+                            <input type="radio" name="q${index}" value="${i}">
+                            ${opt}
+                        </label><br>`
+                    ).join("")}
+                </div>
+            `;
+        });
+
+        html += `<button onclick="checkAnswers(${cls})">Submit Answers</button>`;
+
+        area.innerHTML = html;
+    }
+
+    function checkAnswers(cls) {
+        let mcqs = quizData[cls];
+        let score = 0;
+
+        mcqs.forEach((item, index) => {
+            let selected = document.querySelector(`input[name="q${index}"]:checked`);
+            if (selected && parseInt(selected.value) === item.correct) {
+                score++;
+            }
+        });
+
+        const scoreBox = document.getElementById("scoreBox");
+        scoreBox.innerHTML = `Your Score: ${score} / ${quizData[cls].length}`;
+        scoreBox.style.display = "block";
+    }
+</script>
+
+</body>
+</html>
